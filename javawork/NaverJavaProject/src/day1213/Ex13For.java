@@ -6,17 +6,21 @@ public class Ex13For {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int i, sum = 0; 
-		int[] a = {80, 70, 60};
+		
+		Scanner sc = new Scanner(System.in);
+		
+		int i, n = 0, sum = 0; 
 		double avg;
 		
-		for (i = 0; i <= 2; i++) 
+		n = sc.nextInt();
+		
+		for (i = 0; i <= n; i++) 
 		{
-			sum += a[i];
+			sum += i;
 		}
 		
-		avg = (double)sum / 3;
-		System.out.println(avg);
+		
+		System.out.println(sum);
 	}
 
 }
