@@ -1,10 +1,11 @@
 package day1217;
 
-public class SwitchExpressionsExample {
+public class Book124 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		// 자바 12 이후부터 적용되는 사항
+		
 		char grade = 'B';
 		
 		switch(grade) {
