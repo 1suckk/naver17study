@@ -6,15 +6,15 @@ public class Ex12SawonArray {
 	
 	public static void dataInput(Sawon s) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("사원명: ");
+		System.out.print("사원명: ");
 		String name = sc.nextLine();
-		System.out.println("직급: ");
+		System.out.print("직급(부장/과장/대리/사원 중 택일): ");
 		String position = sc.nextLine();
 		while (position.trim().isEmpty()) {
 	        System.out.print("직급을 반드시 입력해야 합니다. 다시 입력하세요: ");
 	        position = sc.nextLine();
 	    }
-		System.out.println("가족수: ");
+		System.out.print("가족수: ");
 		int famSu = Integer.parseInt(sc.nextLine());
 	
 		s.changeSawon(name, position, famSu);
@@ -76,6 +76,8 @@ public class Ex12SawonArray {
 		 */
 		for (int i=0; i < mySawon.length; i++)
 			writeSawon(mySawon[i]);
+		
+		sc.close();
 	}
-
+	
 }
