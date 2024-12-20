@@ -4,9 +4,9 @@ public class Sawon {
 	/*
 	 * 멤버변수 사원명 saWonName, 직급 position, 가족수 famSu
 	 */
-	String sawonName;
-	String position;
-	int famSu;
+	private String sawonName;
+	private String position;
+	private int famSu;
 	
 	
 	/*
@@ -65,10 +65,10 @@ public class Sawon {
 		        return 0; 
 		 
 	    switch(this.position) {
-	        case "부장": return 450;
-	        case "과장": return 300;
-	        case "대리": return 250;
-	        case "사원": return 150;
+	        case "부장": return 4500000;
+	        case "과장": return 3000000;
+	        case "대리": return 2500000;
+	        case "사원": return 1500000;
 	        default: return 0;
 	    }
 	}
@@ -84,9 +84,9 @@ public class Sawon {
 		
 	    switch(this.position) {
 	        case "부장":
-	        case "과장": return 70;
+	        case "과장": return 700000;
 	        case "대리":
-	        case "사원": return 50;
+	        case "사원": return 500000;
 	        default: return 0;
 	    }
 	}
@@ -110,9 +110,9 @@ public class Sawon {
 		int FamSudang = 0;
 		
 		if (famSu >= 5)
-			FamSudang = 30;
+			FamSudang = 300000;
 		else if (2 <= famSu && famSu < 5) 
-			FamSudang = 10;
+			FamSudang = 100000;
 		else
 			FamSudang = 0;
 		
