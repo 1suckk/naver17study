@@ -3,6 +3,7 @@ package day1220;
 import java.util.Scanner;
 
 /*
+ *12월 22일까지 종료하고자 했으나 보류
  * Command라는 인터페이스에 process() 추상메서드 추가
  * 
  * 인터페이스 Command를 구현하는 Insert(추가)
