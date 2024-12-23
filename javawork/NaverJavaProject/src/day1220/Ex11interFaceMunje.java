@@ -17,9 +17,9 @@ interface Command
 
 /*
  * 호출하는 메서드는
- * public static void dbProcess(Command comm)
+ * public static void dbProcess(Command command)
  * {
- * 		comm.process(); // 다형성 처리가 되도록
+ * 		command.process(); // 다형성 처리가 되도록
  * 		//1번을 누르면 추가 2번을 누르면 출력....
  * }
  */ 
