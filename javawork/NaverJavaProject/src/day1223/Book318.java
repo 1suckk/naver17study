@@ -1,47 +1,39 @@
 package day1223;
 
-class Tire {
-	public void roll() {
-		System.out.println("회전합니다.");
-	}
+interface Tire
+{
+	public void roll();
 }
 
-class HankookTire extends Tire {
+class HankookTire implements Tire {
 	@Override
 	public void roll() {
 		System.out.println("한국 타이어가 회전합니다.");
 	}
 }
 
-class kumhoTire extends Tire {
+class KumhoTire implements Tire {
 	@Override
 	public void roll() {
 		System.out.println("금호 타이어가 회전합니다.");
 	}
 }
 
-class Car {
-	public Tire tire;
-	
-	public void run() {
+class Car {	
+	public void run(Tire tire) {
 		tire.roll();
 	}
 }
 
 public class Book318 {
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Car myCar = new Car();
 		
-		myCar.tire = new Tire();
-		myCar.run();
+		KumhoTire kumhoTire = new KumhoTire();
+		myCar.run(kumhoTire);
 		
-		myCar.tire = new HankookTire();
-		myCar.run();
-		
-		myCar.tire = new kumhoTire();
-		myCar.run();
+		HankookTire hankookTire = new HankookTire();
+		myCar.run(hankookTire);
 	}
-
 }
