@@ -8,7 +8,7 @@ interface InterA
 //인터페이스끼리의 상속은 extends
 interface InterB extends InterA
 {
-	//study() 도 함께 상속잗았다.
+	//study() 도 함께 상속받았다.
 	public void play();
 }
 
@@ -20,7 +20,6 @@ class MyInter implements InterB
 	public void play() {
 		System.out.println("그룹 모임을 합니다.");
 	}
-	
 	public void job() {
 		System.out.println("밀린 일처리를 합니다.");
 	}
