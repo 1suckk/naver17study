@@ -1,9 +1,12 @@
 package day1226;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -23,7 +26,7 @@ public class Ex6TableCRUD extends JFrame {
 	JTable table;
 	DefaultTableModel tableModel; //추가, 삭제 등의 메서드를 가지고 있는 클래스 모델
 	List<Student> studentList = new ArrayList<Student>();
-	static final String FILENAME = "d:/naver17study/student.txt";
+	static final String FILENAME = "D:\\naver17study\\javawork\\NaverJavaProject\\src\\day1226\\student.txt";
 	JTextField tfName, tfKor, tfEng; //이름, 국어성적, 영어성적
 	JButton btnAdd; //추가 버튼만
 	
@@ -65,7 +68,7 @@ public class Ex6TableCRUD extends JFrame {
 	            while ((line = br.readLine()) != null) {
 	                String[] data = line.split("\\|"); //data의 열을 구분하는 "|"
 	                /*
-	                 * 이름, 국어성적, 영어성적을 받고나면
+	                 * 이름, 국어성적, 영어성적을 받고나면 (data.length >= 3)
 	                 * studentList의 각 부분에 배열처럼 집어넣기 
 	                 */
 	                if (data.length >= 3) {
@@ -81,6 +84,31 @@ public class Ex6TableCRUD extends JFrame {
 	        }
 	}
 	
+	//List 의 데이터를 테이블에 출력해주는 메서드
+	public void writeTableData() {
+		// 기존의 테이블에 출력된 데이터를 삭제 후 다시 추가
+		tableModel.setRowCount(0);
+		
+		for (Student stu:studentList)
+		{	
+			Vector<String> data = new Vector<String>();
+			
+			int kor = stu.getKor();
+			int eng = stu.getEng();
+			int sum = kor + eng;
+			double avg = sum/2.0;
+			
+			data.add(stu.getName());
+			data.add(String.valueOf(kor));
+			data.add(String.valueOf(eng));
+			data.add(String.valueOf(sum));
+			data.add(String.valueOf(avg));
+			
+			// table에 추가 
+			tableModel.addRow(data);
+		}
+	}
+	
 	public void initDesign() {
 		//파일을 읽어온다
 		this.studentFileRead();
@@ -89,6 +117,10 @@ public class Ex6TableCRUD extends JFrame {
 		String[] title = {"이름", "국어", "영어", "총점", "평균"};
 		tableModel = new DefaultTableModel(title, 0);
 		table = new JTable(tableModel);
+		
+		//table에 데이터 추가
+		this.writeTableData();
+		
 		//frame에 추가
 		this.add("Center", new JScrollPane(table));
 		
@@ -100,7 +132,32 @@ public class Ex6TableCRUD extends JFrame {
 		
 		btnAdd = new JButton("추가");
 		
-		//panel에 각 컴포넌트 추가
+		//버튼 클릭 시 이벤트 발생
+		//익명 내부 클래스로 만들어진다
+		btnAdd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				// 입력한 데이터를 읽어서 Student 에 넣은 후 다시 list에 추가
+				String name = tfName.getText();
+				int kor = Integer.parseInt(tfKor.getText());
+				int eng = Integer.parseInt(tfEng.getText());
+				
+				Student stu = new Student(name, kor, eng);
+				studentList.add(stu);
+				
+				// table 다시 출력
+				writeTableData();
+				
+				// 입력데이터는 지우기
+				tfName.setText("");
+				tfKor.setText("");
+				tfEng.setText("");
+			}
+		});
+		
+		// panel에 각 컴포넌트 추가
 		panel.add(new JLabel("이름"));
 		panel.add(tfName);
 		panel.add(new JLabel("국어"));
@@ -114,7 +171,28 @@ public class Ex6TableCRUD extends JFrame {
 	}
 	
 	public void saveFile() {
-		
+		//List 의 내용을 파일에 저장한다
+		FileWriter fw  =null;
+		try {
+			fw = new FileWriter(FILENAME);
+			
+			for (Student stu:studentList)
+			{
+				String s = stu.getName() + "|" + stu.getKor() +
+				"|" + stu.getEng() + "\n";
+				fw.write(s);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void main(String[] args) {
