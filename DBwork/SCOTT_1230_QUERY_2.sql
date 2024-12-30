@@ -1,0 +1,202 @@
+--컬럼 제목에 별칭추가
+--SQL에서 유일하게 큰따옴표가 들어가는 경우가 별칭을 지정해줄때
+--AS는 생략 가능함 따옴표도 생략이 가능함(단 공백이 없는 경우에만)
+SELECT ENAME AS "사원명",SAL AS "월급여"
+FROM EMP;
+
+SELECT ENAME "사원명",SAL "월급여"
+FROM EMP;
+
+SELECT ENAME 사원명 ,SAL 월급여
+FROM EMP;
+
+-- 총 레코드 갯수
+SELECT COUNT(*)
+FROM EMP; -- 이 경우에는 컬럼명이 COUNT(*)
+SELECT COUNT(*) COUNT
+FROM EMP; -- 이 경우에는 컬럼명이 COUNT
+SELECT COUNT(*) 총갯수
+FROM EMP; -- 이 경우에는 컬럼명이 총갯수
+
+SELECT SAL, COMM, SAL+NVL(COMM, 0) SUM 
+FROM EMP;
+
+SELECT SAL 월급여, COMM 커미션, SAL+NVL(COMM, 0) 총액
+FROM EMP;
+
+SELECT '내 직업은 '||JOB||'이고, 내 월급여는 '||SAL||'입니다.' 자기소개
+FROM EMP;
+
+--SAL이 1500~2000 사이가 아닌 경우만 조회
+SELECT *
+FROM EMP
+WHERE SAL NOT BETWEEN 1500 AND 2000;
+
+--NOT IN을 사용하여 JOB이 SALESMAN, CLERK가 아닌 경우
+SELECT *
+FROM EMP
+WHERE JOB NOT IN ('SALESMAN', 'CLERK');
+
+--GROUP 함수(COUNT, SIM, AVG, MAX, MIN)
+SELECT COUNT(*)
+FROM EMP;
+
+SELECT SUM(SAL) 
+FROM EMP;
+
+SELECT AVG(SAL)
+FROM EMP; --소수점을 추리는 ROUND 함수
+
+SELECT ROUND(AVG(SAL),2)
+FROM EMP;
+
+SELECT MAX(SAL)
+FROM EMP; --최고급여
+
+SELECT MIN(SAL)
+FROM EMP;
+
+-- 평균급여보다 SAL이 높은 사람을 조회하시오
+SELECT ENAME, SAL
+FROM EMP
+WHERE SAL >=
+    (
+    SELECT AVG(SAL)
+    FROM EMP
+    )
+ORDER BY SAL ASC;
+
+--서브쿼리 2 : SCOTT의 직업과 같은 직업을 가진 사람의 이름을 조회하시오.
+SELECT ENAME, SAL, JOB
+FROM EMP
+WHERE JOB =
+    (
+    SELECT JOB
+    FROM EMP
+    WHERE ENAME = 'SCOTT'
+    )
+ORDER BY ENAME ASC;
+
+--SCOTT의 MGR과 같은 MGR을 가진 사람
+SELECT ENAME, MGR
+FROM EMP
+WHERE MGR =
+    (
+    SELECT MGR
+    FROM EMP
+    WHERE ENAME = 'SCOTT'
+    )
+ORDER BY ENAME ASC;
+
+--그룹바이 연산
+SELECT JOB 직업, COUNT(*) 인원수
+FROM EMP
+GROUP BY JOB;
+
+--인원수가 3명이상인 직군만 그룹바이
+SELECT JOB 직업, COUNT(*) 인원수
+FROM EMP
+GROUP BY JOB
+HAVING COUNT(*) >= 3;
+
+--인원수가 3명이상인 직군만 그룹바이 그리고 인원수로 오름차순
+SELECT JOB 직업, COUNT(*) 인원수
+FROM EMP
+GROUP BY JOB
+HAVING COUNT(*) >= 3
+ORDER BY COUNT(*) ASC;
+
+--인원수가 3명이상인 직군만 그룹바이 그리고 인원수로 오름차순(2)
+SELECT JOB 직업, COUNT(*) 인원수
+FROM EMP
+GROUP BY JOB
+HAVING COUNT(*) >= 3
+ORDER BY 2 ASC;
+
+--직업별 인원수, 최저연봉, 최고연봉, 평균연봉 소수점 이하 없이 출력
+SELECT JOB 직군, COUNT(*) 인원수, MIN(SAL) 최저연봉, MAX(SAL) 최고연봉, ROUND(AVG(SAL),0) 평균연봉
+FROM EMP
+GROUP BY JOB
+ORDER BY JOB ASC;
+
+--DUAL 이용
+--CEIL과 FLOOR는 소수점이 있을 때만 사용
+SELECT ABS(-5), ABS(5) 
+FROM DUAL;
+
+SELECT ROUND(3.6, 0), CEIL(3.6), FLOOR(3.6)
+FROM DUAL;
+
+SELECT ROUND(3.4, 0), CEIL(3.4), FLOOR(3.4)
+FROM DUAL;
+
+SELECT ROUND(328947, -2) 
+FROM DUAL;
+
+SELECT ROUND(AVG(SAL), 0), CEIL(AVG(SAL)), FLOOR(AVG(SAL)) 
+FROM EMP;
+
+--POWER 제곱, MOD 나누기 나머지
+SELECT POWER(3, 3), MOD(10, 3)
+FROM DUAL;
+
+--문자함수 CONCAT, LOWER, UPPER, INITCAP
+SELECT ENAME,  CONCAT(ENAME, '님'), LOWER(ENAME), UPPER(ENAME), INITCAP(ENAME)
+FROM EMP;
+
+--문자 패딩, 주민번호 등에서 사용
+SELECT LPAD(SAL, 10, '*')
+FROM EMP;
+SELECT RPAD(SAL, 10, '*')
+FROM EMP;
+
+SELECT SUBSTR('HAPPY DAY', 7, 3) 
+FROM DUAL;
+
+SELECT SUBSTR('HAPPY DAY', -6, 3) 
+FROM DUAL;
+
+--EMP 테이블의 ENAME에서 왼쪽에서 3글자를 추출 후 나머지 총 7자리중
+--우측 빈공간은 *로 채워서 출력
+SELECT RPAD(SUBSTR(ENAME, 0, 3),7,'*'), SAL
+FROM EMP;
+
+--LENGTH 길이구하기
+SELECT ENAME 이름, LENGTH(ENAME) 문자길이 
+FROM EMP;
+
+--REPLACE 
+SELECT REPLACE('HAPPY DAY', 'HAPPY', 'GOOD') FROM DUAL;
+
+--현재 날짜를 나타내는 SYSDATE
+SELECT SYSDATE 
+FROM DUAL;
+
+SELECT SYSDATE+7
+FROM DUAL; --7일뒤날짜
+
+--TO_CHAR 함수를 이용해서 원하는 날짜 모양으로 출력해보자
+SELECT TO_CHAR(SYSDATE, 'yyyy-mm-dd') 
+FROM DUAL;
+
+SELECT TO_CHAR(SYSDATE, 'yyyy-mm-dd hh:mi') 
+FROM DUAL; -- hh는 1~12
+
+SELECT TO_CHAR(SYSDATE, 'yyyy-mm-dd hh24:mi') 
+FROM DUAL; -- hh는 1~12
+
+SELECT TO_CHAR(SYSDATE, 'MONTH')
+FROM DUAL; --지역화에 따라 다름, 사용 지양
+
+--현재 년도 4자리만 추출
+SELECT TO_CHAR(SYSDATE, 'YYYY') 
+FROM DUAL;
+
+SELECT TO_CHAR(SYSDATE, 'MM') 
+FROM DUAL;
+
+SELECT TO_CHAR(TO_DATE('2024-05-10'), 'YYYY') 
+FROM DUAL;
+
+SELECT TO_CHAR(TO_DATE('2024-05-10'), 'MM') 
+FROM DUAL;
