@@ -1,1 +1,0 @@
-INDEX VERSION 1.134+D:\naver1210\study\javawork\NaverJavaProject\.metadata\.plugins\org.eclipse.jdt.core
