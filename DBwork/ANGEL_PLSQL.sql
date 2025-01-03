@@ -198,5 +198,6 @@ BEGIN
 EXCEPTION
     WHEN OTHERS THEN 
             dbms_output.put_line('오류 발생: '||SQLERRM);
+            
 END;
 /
