@@ -47,8 +47,8 @@ public class Ex3OracleJoin {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             
-            System.out.println("SANGCODE\tSANGNAME\t\tCNTNUM\tCNTDAY");
-            System.out.println("----------------------------------------------------");
+            System.out.println("상품코드\t\t상품명\t\t\t수량\t등록일");
+            System.out.println("-----------------------------------------------------------");
             
             while (rs.next()) {
                 String sangCode = rs.getString("SANGCODE");
