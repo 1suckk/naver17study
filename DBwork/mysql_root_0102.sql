@@ -115,5 +115,22 @@ from dual;
 select greatest(100, 110, 120, 130), least(100, 110, 120, 130)
 from dual;
 
+-- 0106
+create table study502.shop (
+	idx smallint auto_increment primary key,
+	sangpum varchar(20),
+    su smallint(10),
+	danga int,
+    ipgoday datetime
+);
 
+select *
+from shop;
 
+select *
+from person;
+
+alter table person
+drop column today;
+
+desc person;
