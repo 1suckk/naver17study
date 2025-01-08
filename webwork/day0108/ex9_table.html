@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div.tb2 {
+            margin-top: 30px;
+
+        }
+
+        div.tb2>table {
+            width: 400px;
+            border-collapse: collapse;
+            border:groove 10px gold;
+        }
+
+        div.tb2>table img {
+            width:130px;
+        }
+
+        div.tb2 tr td {
+            border: dotted 1px gray; 
+        }
+    </style>
+</head>
+<body>
+    <div class="tb1">
+        <table border="1" style="width: 300px;">
+            <caption>테이블</caption>
+            <tr height="40">
+                <td>이름</td>
+                <td>핸드폰</td>
+            </tr>
+            <tr height="50">
+                <td>김장영</td>
+                <td>01012345678</td>
+            </tr>
+            <tr height="100">
+                <td>이중무</td>
+                <td>01052987458</td>
+            </tr>
+        </table>
+    </div>
+    <div class="tb2">
+        <table>
+        <tr>
+            <td rowspan="4" align="center">
+                <img src="../photo/19.jpg">
+            </td>
+            <td>이름: 수지</td>
+        </tr>
+        <tr>
+            <td>나이: 비밀</td>
+        </tr>
+        <tr>
+            <td>핸드폰: 44443333</td>
+        </tr>
+        <tr>
+            <td>주소: 서울시 강남구 역삼동</td>
+        </tr>   
+        <td colspan="2" align="center">
+            <b>이달의 우수사원</b>
+        </td>
+        </table>
+    </div>
+</body>
+</html>
