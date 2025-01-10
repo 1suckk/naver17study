@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            border: 1px solid #000;
+            width:200px;
+            height: 200px;
+            float: left;
+
+        }
+
+        div img{
+            width: 100px;
+            height: 100px;
+        }
+
+        #img1 img{
+            transform: translate(50px, 30px); /*x,y좌표 이동*/
+        }
+
+        #img2 img {
+            transform: rotate(45deg); /*45도 회전*/
+        }
+
+        #img3 img {
+            transform: scale(2); /*2배 확대*/
+        }
+
+        #img4 img {
+            transform: skew(30deg, 40deg);
+        }
+
+        #img1{
+            background: rgb(10, 189, 9);
+        }
+
+        #img2{
+            background: rgba(10, 189, 9, 0.5);
+        }
+
+        #img3{
+            background: rgba(10, 189, 9, 0.2);
+        }
+
+        #img4{
+            background: rgba(10, 189, 9, 0.1);
+        }
+
+        #ex1, #ex2{
+            background: #905;
+            color: yellow;
+            width: 150px;
+            height: 20px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        #ex3 img{
+            width: 100px;
+            height: 100px;
+            opacity: 0.2;
+            border: 5px solid #900;
+            transform: rotate(10deg);
+            cursor: pointer;
+            transition: all 3s;
+        }
+
+        #ex3 img:hover{
+            opacity: 1.0;
+            border-color: #f0f;
+            transform: rotate(45deg);
+        }
+
+        #ex1 {
+            transition-property: width; /*width의 효과를 주겠다는 의미*/
+            transition-duration: 2s; /*효과지속시간은 2초*/
+        }
+
+        #ex1:hover{
+            width: 400px; /*마우스를 갖다대면 늘어나는 효과*/
+        }
+    </style>
+</head>
+
+<body>
+    <div id = "img1">
+        <img src="../photo/12.jpg"
+    </div>
+    <div id = "img2">
+        <img src="../photo/12.jpg"
+    </div>
+    <div id = "img3">
+        <img src="../photo/12.jpg"
+    </div>
+    <div id = "img4">
+        <img src="../photo/12.jpg"
+    </div>
+
+    <p id="ex1">Transition Test</p>
+    <p id="ex2">Transition Test</p>
+    <p id="ex3">
+        <img src="../photo2/bottle01.jpg">
+    </p>
+
+</body>
+</html>
