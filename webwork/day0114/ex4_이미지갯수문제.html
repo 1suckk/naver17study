@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>이미지 그리드 뷰</title>
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Gaegu&family=Jua&family=Nanum+Pen+Script&family=Playwrite+AU+SA:wght@100..400&family=Single+Day&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body * {
+                font-family: 'Jua';
+            }
+            .imageview img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+        </style>
+        <script>
+            //그리드값 초기화
+            let currentPage = 1;
+            let imagesPerRow = 5;
+            const totalImages = 34;
+
+            window.onload = function() {
+                imageGridView();
+                document.querySelector('.selcount').addEventListener('change', function() {
+                    imagesPerRow = parseInt(this.value);
+                    currentPage = 1;
+                    imageGridView();
+                });
+            }
+
+            //확장자를 선택하는 함수; 24번이 gif로 섞여있기 때문에
+            function getImageExtension(index) {
+                return index === 24 ? 'gif' : 'jpg';
+            }
+
+            function imageGridView()
+            {
+                const imageview = document.querySelector('.imageview');
+                imageview.innerHTML = '';
+
+                const table = document.createElement('table');
+                table.className = 'table table-bordered';
+                const tbody = document.createElement('tbody');
+
+                const imagesPerPage = imagesPerRow * imagesPerRow;
+                const startIndex = (currentPage - 1) * imagesPerPage + 1;
+                const endIndex = Math.min(startIndex + imagesPerPage - 1, totalImages);
+
+                for (let i = startIndex; i <= endIndex; i += imagesPerRow) {
+                    const row = document.createElement('tr');
+                    for (let j = 0; j < imagesPerRow; j++) {
+                        const cell = document.createElement('td');
+                        if (i + j <= endIndex) {
+                            const img = document.createElement('img');
+                            const imageIndex = i + j;
+                            const extension = getImageExtension(imageIndex);
+                            img.src = `../photo2/${i + j}.${extension}`;
+                            img.alt = `Image ${imageIndex}`;
+                            cell.appendChild(img);
+                        }
+                        row.appendChild(cell);
+                    }
+                    tbody.appendChild(row);
+                }
+
+                table.appendChild(tbody);
+                imageview.appendChild(table);
+
+                // 페이징 버튼 추가
+                const paginationDiv = document.createElement('div');
+                paginationDiv.className = 'pagination justify-content-center';
+                const totalPages = Math.ceil(totalImages / imagesPerPage);
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageLink = document.createElement('a');
+                    pageLink.href = '#';
+                    pageLink.className = 'page-link' + (i === currentPage ? ' active' : '');
+                    pageLink.textContent = i;
+                    pageLink.onclick = function(e) {
+                        e.preventDefault();
+                        currentPage = i;
+                        imageGridView();
+                    };
+                    const pageItem = document.createElement('li');
+                    pageItem.className = 'page-item';
+                    pageItem.appendChild(pageLink);
+                    paginationDiv.appendChild(pageItem);
+                }
+
+                imageview.appendChild(paginationDiv);
+            }
+        </script>
+    </head>
+
+    <body>
+        <div style="margin: 20px;">
+            <h6 class="alert alert-info">table로 이미지 나타내기</h6>
+            <select style="width: 100px;" class="selcount">
+                <option value="3">3개씩</option>
+                <option value="4">4개씩</option>
+                <option value="5" selected>5개씩</option>
+                <option value="6">6개씩</option>
+                <option value="7">7개씩</option>
+                <option value="8">8개씩</option>
+            </select>
+            <!--이미지를 나타내는 영역-->
+            <div class="imageview" style="margin-top: 20px;"></div>
+        </div>
+    </body>
+</html>
