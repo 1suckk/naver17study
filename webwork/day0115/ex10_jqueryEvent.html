@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Gaegu&family=Jua&family=Nanum+Pen+Script&family=Playwrite+AU+SA:wght@100..400&family=Single+Day&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <style>
+            body *{
+                font-family: 'Jua';
+            }
+        </style>
+    </head>
+    <body>
+        <h5 class="alert alert-danger">jquery 이벤트</h5>
+        <div class="photos">
+            <img src="../mycar/mycar13.png" width="200">
+            <img src="../mycar/mycar11.png" width="200">
+            <img src="../mycar/mycar7.png" width="200">
+        </div>
+        <script>
+            //첫번째 이미지에 마우스를 올리면 mycar15으로 변경 벗어나면 원위치
+            $("div.photos>img:eq(0)").mouseover(function(){
+                $(this).attr("src","../mycar/mycar15.png");
+            });
+            $("div.photos>img:eq(0)").mouseout(function(){
+                $(this).attr("src", "../mycar/mycar13.png");
+            });
+
+            //두번째 이미지에 마우스를 올리면 mycar11으로 변경 벗어나면 원위치
+            $("div.photos>img:eq(1)").hover
+            (
+                function()
+                {
+                    //over
+                    $(this).attr("src","../mycar/mycar15.png");
+                }, 
+                function()
+                {
+                    //out
+                    $(this).attr("src","../mycar/mycar11.png");
+                }
+            );
+
+            //세번째 이미지에 마우스를 올리면 mycar7으로 변경 벗어나면 원위치
+            $(document).on("mouseover", "div.photos>img:eq(2)", function(){
+                $(this).attr("src","../mycar/mycar15.png");
+            });
+            $(document).on("mouseout", "div.photos>img:eq(2)", function(){
+                $(this).attr("src","../mycar/mycar7.png");
+            });
+
+            //img에 마우스를 올리면 border 설정
+            //벗어나면 border 원위치
+            $("div.photos>img").hover
+            (
+                function()
+                {
+                    $(this).css("border", "10px inset gold");
+                },
+                function()
+                {
+                    $(this).css("border","none");
+                }
+            );
+        </script>
+        <hr>
+        <img src="../photo/12.jpg" width="200" class="myphoto">
+        <script>
+            //.myphoto 에 마우스를 올리면 이미지변경, 벗어나면 원복귀
+            //클릭시 alert 메시지
+            //bind 여러 이벤트들을 묶어서 한꺼번에 처리한다
+            $(".myphoto").bind({
+                click:function(){
+                    alert("bind 연습중");
+                },
+                mouseover:function(){
+                    $(this).attr("src","../photo/15.jpg");
+                },
+                mouseout:function(){
+                    $(this).attr("src","../photo/12.jpg");
+                }
+            });
+        </script>
+    </body>
+</html>
