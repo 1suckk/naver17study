@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Gaegu&family=Jua&family=Nanum+Pen+Script&family=Playwrite+AU+SA:wght@100..400&family=Single+Day&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <style>
+            body *{
+                font-family: 'Jua';
+            }
+
+            div.mytooltip {
+                position: absolute;
+                line-height: 1.5;
+                color: black;
+                width: 200px;
+                background-color: #f90;
+                border: 2px solid white;
+                padding: 10px;
+                border-radius: 30px;
+                opacity: 0.8;
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <script>
+            $(function(){
+                //이벤트1
+                $("a").bind({
+                    mousemove:function(e){
+                        $("div.mytooltip").css({
+                           "left": e.pageX+"px",
+                           "top": e.pageY+"px"
+                        });
+                    },
+                    mouseover:function(e){
+                        $("div.mytooltip").fadeIn('fast');
+
+                        $("div.mytooltip").html(`
+                         Java<br>HTML5<br>SpringBoot<br>MySQL`)
+                         .css("background-color","#f90");
+                    },
+                    mouseout:function(e){
+                        $("div.mytooltip").fadeOut('fast');
+                    },
+                });
+                
+                //이벤트2
+                $("b.view").bind({
+                    mousemove:function(e){
+                        $("div.mytooltip").css({
+                            "left":e.pageX+"px",
+                            "top":e.pageY+"px"
+                        });
+                    },
+                    mouseover:function(e){
+                        let text=$(this).text();
+                        let color = $(this).attr("color");
+
+                    },
+                    mouseout:function(e){
+                        $("div.mytooltip").fadeOut('fast');
+                    },
+                });
+
+                //이벤트3
+                $("ol.today li").bind({
+                    mousemove:function(e){
+                        $("div.mytooltip").css({
+                            "left":e.pageX+"px",
+                            "top":e.pageY+"px"
+                        });
+                    },
+                    mouseover:function(e) {
+                        let fname=$(this).text();
+                        let phtoo=$(this).attr("photo");
+                        $("div.mytooltip").html(`
+                        <h6>${fname}</h6>
+                        <img src="${photo}" width=100 border="1">
+                        `).show();
+                    },
+                    mouseout:function(e){
+                        $("div.mytooltip").hide();
+                    },
+                });
+            });
+        </script>
+        <div class="mytooltip">
+            Java<br>
+            HTML5<br>
+            SpringBoot<br>
+            MySQL
+        </div>
+
+        <a style="font-size: 25px; cursor: pointer;">
+            [트럼프 2.0] '보호 무역' 더 세졌다…보편 관세에 탄소세까지
+        </a>
+        <hr>
+        <pre style="font-size: 15px;">
+            입력 : 2025.01.20. 오후 1:01<br>
+            [데일리안 = 정인균 기자] 도널드 트럼프 2기 행정부 출범이 하루 앞으로 다가오면서 보편 관세<br>
+            와 전기차 보조금 폐지, 탄소세 도입 등 보호 무역 정책에 대한 우려가 나온다.<br><br><br>
+            앞서 트럼프 당선인은 지난 선거 운동 내내 미국 우선주의를 강조하며 강력한 보호 무역 정책을<br>
+            실시하겠다고 밝혔다. 그러면서 모든 수입품에 10~20%의 보편 관세와 60%의 대중 관세 등을<br>
+            도입하겠다고 설명했다. 그는 이를 위해 비상사태 선포까지 고려하고 있는 것으로 알려졌다.<br>
+        </pre>
+        <hr>
+        <ol class="today">
+            <li photo="../food/1.jpg">에그샌드위치</li>
+            <li photo="../food/11.jpg">망고빙수</li>
+            <li photo="../food/2.jpg">닭꼬치</li>
+            <li photo="../mycar/mycar13.png">핑크카</li>
+            <li photo="../mycar/mycar11.png">옐로우카</li>
+        </ol>
+    </body>
+</html>

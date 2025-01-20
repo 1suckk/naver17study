@@ -42,8 +42,10 @@
     <div class="product-grid" id="productList"></div>
 
         <script>
+           
+
             $(document).ready(function() {
-                //배열을 써서 음식의
+                //배열을 써서 음식의 사진을 나오게 하기
                 const products = [
                     '../food/1.jpg',
                     '../food/2.jpg',
@@ -87,7 +89,7 @@
                     $('#productList').append(`
                         <div class="product-container" data-id="${index}">
                             
-                            <i class="bi bi-x-circle" style="color: red;"></i>
+                            <i class="bi bi-x-circle delete-icon" style="color: red;"></i>
                             <img src=${product} alt="상품이미지" style="width: 100px;">
                             <label>${pname[index]}</label>
                             <br>
