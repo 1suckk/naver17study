@@ -125,6 +125,7 @@ public class Ex1FoodMysqlDb extends JFrame{
 		
 		this.add("South", p2);
 		
+		//메뉴등록
 		btnFoodResAdd.addActionListener(new ActionListener() {
 			
 			@Override
@@ -145,6 +146,7 @@ public class Ex1FoodMysqlDb extends JFrame{
 			}
 		});
 		
+		//메뉴삭제
 		btnFoodResDel.addActionListener(new ActionListener() {
 			
 			@Override

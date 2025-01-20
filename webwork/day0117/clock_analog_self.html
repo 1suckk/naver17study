@@ -13,6 +13,16 @@
         body *{
             font-family: "Jua";
         }
+
+        .number {
+            position: absolute;
+            width: 2px;
+            height: 10px;
+            background: black;
+            left: 50%;
+            transform-origin: 50px 150px;
+        }
+
         .clock {
             width: 300px;
             height: 300px;
@@ -25,7 +35,7 @@
             position: absolute;
             bottom: 50%;
             left: 50%;
-            transform-origin: bottom;
+            transform-origin: 50% 100%;
             background: black;
         }
         .hour {
@@ -60,12 +70,23 @@
         <div class="hand second"></div>
         <div class="center"></div>
     </div>
-
     <h2 style="text-align: center;">대한민국 기준 시간</h2>
-
     <h1 id="digital-clock" style="text-align: center;"></h1>
 
     <script>
+        for (let i=1; i<=12; i++) {
+            const number = document.createElement('div');
+            number.className = 'number';
+            const angle = (i * 30) - 90; //각 숫자의 각도 계산
+            
+            const x = Math.cos(angle * Math.PI/180)*120;
+            const y = Math.sin(angle * Math.PI/180)*120;
+            
+            number.style.transform= `translate(${x}px, ${y}px)`;
+            number.textContent = i;
+            document.querySelector('.clock').appendChild(number);
+        }
+
         function setTime() {
             const now = new Date();
             const koreaTime = new Date(now.toLocaleString("en-US", {timeZone:"Asia/Seoul"}));
@@ -78,9 +99,9 @@
             const minuteHand = document.querySelector('.minute');
             const hourHand = document.querySelector('.hour');
 
-            const secondDegrees = (seconds / 60) * 360 + 90;
-            const minuteDegrees = (minutes / 60) * 360 + (seconds / 60) * 6 + 90;
-            const hourDegrees = (hours / 12) * 360 + (minutes / 60) * 30 + 90;
+            const secondDegrees = (seconds / 60) * 360;
+            const minuteDegrees = (minutes / 60) * 360 + (seconds / 60) * 6;
+            const hourDegrees = ((hours % 12) * 30) + (minutes / 60) * 30;
 
             secondHand.style.transform = `translateX(-50%) rotate(${secondDegrees}deg)`;
             minuteHand.style.transform = `translateX(-50%) rotate(${minuteDegrees}deg)`;
@@ -91,10 +112,8 @@
             const formattedHours = hours.toString().padStart(2, '0');
             const formattedMinutes = minutes.toString().padStart(2, '0');
             const formattedSeconds = seconds.toString().padStart(2, '0');
-            digitalClock.textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+            digitalClock.textContent = `${(hours>=12)?'오전':'오후'} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
         }
-
-        
 
         setInterval(setTime, 1000);
         setTime();
