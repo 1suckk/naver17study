@@ -29,10 +29,11 @@
             }
         </style>
         <script>
+            let ctx;
             $(function(){
                 let draw=false;//마우스 클릭시 true,true일동안만 그림그리기위한 변수
                 let can=document.getElementById("can");
-                let ctx=can.getContext("2d");
+                ctx=can.getContext("2d");
                 let preX,preY;//마우스 이동시 직전좌표를 저장할 변수
                 //초기펜 색상
                 ctx.strokeStyle='black';
@@ -81,26 +82,44 @@
         </script>
     </head>
     <body>
-    <h4  class="alert alert-danger">HTML5 의 Canvas 를 이용한 간단그림판</h4>
-    <canvas id="can" width="500" height="500"></canvas>   
-    <!--색상표-->
-    <div id="mypen">
-        <div style="background-color: orange;"></div>
-        <div style="background-color: #ffb6c1;"></div>
-        <div style="background-color: #90ee90;"></div>
-        <div style="background-color: #00bfff;"></div>
-        <div style="background-color: #228b22;"></div>
-        <div style="background-color: #add8e6;"></div>
-        <div style="background-color: #db7093;"></div>
-        <div style="background-color: #fa8072;"></div>
-        <div style="background-color: #afeeee;"></div>
-        <div style="background-color: #9400d3;"></div>
-        <div style="background-color: #ff7f50;"></div>
-        <div style="background-color: #1e90ff;"></div>
-        <div style="background-color: #7fffd4;"></div>
-        <div style="background-color: #c71585;"></div>
-        <div style="background-color: #40e0d0;"></div>
-        <div style="background-color: #ff6347;"></div>
-    </div> 
+        <h4  class="alert alert-danger">HTML5 의 Canvas 를 이용한 간단그림판</h4>
+        <canvas id="can" width="500" height="500"></canvas>   
+        <!--색상표-->
+        <div id="mypen">
+            <div style="background-color: orange;"></div>
+            <div style="background-color: #ffb6c1;"></div>
+            <div style="background-color: #90ee90;"></div>
+            <div style="background-color: #00bfff;"></div>
+            <div style="background-color: #228b22;"></div>
+            <div style="background-color: #add8e6;"></div>
+            <div style="background-color: #db7093;"></div>
+            <div style="background-color: #fa8072;"></div>
+            <div style="background-color: #afeeee;"></div>
+            <div style="background-color: #9400d3;"></div>
+            <div style="background-color: #ff7f50;"></div>
+            <div style="background-color: #1e90ff;"></div>
+            <div style="background-color: #7fffd4;"></div>
+            <div style="background-color: #c71585;"></div>
+            <div style="background-color: #40e0d0;"></div>
+            <div style="background-color: #ff6347;"></div>
+        </div> 
+        <hr style="clear: both;">
+        <button type="button" id="btn1">화면 초기화</button>
+        <button type="button" id="btn2">지우개</button>
+        <button type="button" id="btn3">별도보관</button>
+        <hr class="save">
+
+        <script>
+            $("#btn1").click(function(){
+                ctx.clearRect(0,0,500,500);
+            });
+            $("#btn2").click(function(){
+                ctx.strokeStyle="#fff";
+            });
+            $("#btn3").click(function(){
+                let myimg = `<img src="${can.toDataURL()}">`;
+                $("hr.save").after(myimg);
+            }); 
+        </script>
     </body>
 </html>
