@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.MemberMapper">
+	<select id="checkMyid" parameterType="String" resultType="int">
+		select count(*) from member where myid=#{myid}
+	</select>
+	<insert id="insertMember" parameterType="MemberDto">
+		insert into member (mphoto, mname, myid, mpass, mhp, maddr, gaipday)
+		values (#{mphoto}, #{mname}, #{myid}, #{mpass}, #{mhp}, #{maddr}, now())
+		<!-- insert 후에 추가된 num 값을 얻어서 dto의 num 값에 넣어준다 -->
+		<selectKey keyProperty="num" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<select id="getAllMember" resultType="MemberDto">
+		select * from member order by num desc
+	</select>
+</mapper>
