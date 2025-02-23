@@ -19,8 +19,8 @@
 		select * from bootshop where num=#{num}
 	</select>
 	<update id="updateShop" parameterType="sdto">
-		update bootshop set sangpum=#{sangpum}, scolor=#{sangpum}, scolor=#{scolor}, sprice=#{sprice},
-		snt=#{scnt}, ipgoday=#{ipgoday} where num=#{num} 
+		update bootshop set sangpum=#{sangpum}, scolor=#{scolor}, sprice=#{sprice},
+		scnt=#{scnt}, ipgoday=#{ipgoday} where num=#{num} 
 	</update>
 	<delete id="deleteShop" parameterType="int">
 		delete from bootshop where num=#{num}

@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class ShopRepleService {
+	
 	ShopRepleMapper repleMapper;
 	
 	public void insertShopReple(ShopRepleDto dto)
@@ -25,13 +26,16 @@ public class ShopRepleService {
 	{
 		return repleMapper.getRepleByNum(num);
 	}
-	public String getPhoto(int idx) {
+	public String getPhoto(int idx)
+	{
 		return repleMapper.getPhoto(idx);
 	}
-	public void updateLikes(int idx) {
+	public void updateLikes(int idx)
+	{
 		repleMapper.updateLikes(idx);
 	}
-	public int getLikes(int idx) {
+	public int getLikes(int idx)
+	{
 		return repleMapper.getLikes(idx);
 	}
 }

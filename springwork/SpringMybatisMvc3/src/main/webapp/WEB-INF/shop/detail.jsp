@@ -77,7 +77,7 @@
 			});
 			
 			//댓글 등록 이벤트
-			$(".btnaddreple").click(function(){
+			$("#btnaddreple").click(function(){
 				//여기에는 세가지 반응이 있다
 				//1. 글은 안올린 경우 --> 글을 입력하라고 alert
 				//2. 사진은 안올린 경우 --> 사진을 입력하라고 alert
@@ -87,6 +87,7 @@
 					alert("댓글을 입력하세요.");
 					return;
 				}
+				
 				//''이 아니라 null인 이유는 
 				if(file==null)
 				{
@@ -95,17 +96,17 @@
 				}
 				let form = new FormData();
 				console.log(file);
-				form.append("upload", upload);
-				form.append("message", m);
-				form.append("num", ${dto.num});
+				form.append("upload", file); //댓글에 올릴 사진 업로드
+				form.append("message", m); //댓글에 올릴 텍스트 메시지 업로드
+				form.append("num", ${dto.num}); //몇번 글에 올릴지 추가
 				
 				$.ajax({
 					type:"post",
 					dataType:"text",
-					url:"/shop/addreple",
+					url:"./addreple",
 					data:form,
 					contentType: false,  // 필수 : x-www-form-urlencoded로 파싱되는 것을 방지
-					processType: false,  // 필수: contentType을 false로 줬을 때 QueryString 자동 설정됨. 해제
+					processData: false,  // 필수: contentType을 false로 줬을 때 QueryString 자동 설정됨. 해제
 					success:function(){
 						$("#message").val(""); //초기화
 						file = null;
@@ -122,7 +123,10 @@
 			
 			//댓글 삭제
 			$(document).on("click", ".repledel", function() {
-				let idx = $(this).attr(idx);
+				let idx = $(this).attr("idx");
+				let ans=confirm("해당 댓글을 삭제할까요?");
+				if(!ans) return;//취소 클릭시 함수 종료
+				
 				$.ajax({
 					type:"get",
 					dataType:"text",
@@ -142,9 +146,9 @@
 				$.ajax({
 					type:"get",
 					dataType:"json",
-					url:"./replelist",
-					data:{"num":${dto.num}},
-					success:function(){
+					url:"./likes",
+					data:{"idx":idx},
+					success:function(res){
 						//댓글 삭제 후 전체 댓글 다시 출력
 						icon.next().find(".likes").text(res.likes); //추천 아이콘 옆의 숫자 변경 이벤트
 					}
@@ -171,7 +175,7 @@
 								\${item.message}
 								<span class="day">\${item.writetime}</span>
 								<span style:"float:right;">
-									<i class="bi bi-hand-thumbs-up likesicon"></i>
+									<i class="bi bi-hand-thumbs-up likesicon" idx="\${item.idx}"></i>
 									<span class="chu">추천 <span class="likes">\${item.likes}</span></span>
 									<i class="bi bi-x-lg repledel" idx="\${item.idx}"></i>
 								</span>
@@ -236,7 +240,7 @@
 				<h6>가격: ${dto.sprice}원</h6>
 				<h6>색상: ${dto.scolor}</h6>
 				<h6>입고일: ${dto.ipgoday}</h6>
-				<h6>등록일: <fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/> </h6>
+				<h6>등록일: <fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd"/> </h6>
 			</td>
 			<br>
 		</tr>
@@ -266,8 +270,10 @@
 				<button type="button" class="btn btn-sm btn-success"
 				onclick="location.href='./list'">
 				목록</button>
+				<!--?num=${dto.num} 부분을 안써서 오류 발생 num이라는 parameter 
+				찾지 못한다고 whitelabel error 발생해서 오랜 시간을 허비함-->
 				<button type="button" class="btn btn-sm btn-success"
-				onclick="location.href='./updateform'">
+				onclick="location.href='./updateform?num=${dto.num}'">
 				수정</button>
 				<button type="button" class="btn btn-sm btn-success"
 				onclick="sangdel(${dto.num})">

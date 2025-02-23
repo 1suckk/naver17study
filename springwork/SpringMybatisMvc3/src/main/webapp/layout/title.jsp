@@ -67,7 +67,7 @@
 				<a href="${root}/member/form">회원가입</a>
 			</li>
 			<li>
-				<a href="${root}/board/list">게시판</a>
+				<a href="${root}/member/list">회원목록</a>
 			</li>
 			<li>
 				<c:if test="${sessionScope.loginstatus==null}">

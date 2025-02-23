@@ -38,21 +38,21 @@
 						</td>
 					</tr>
 					<tr>
-						<th width="100">상품 가격</th>
+						<th>상품 가격</th>
 						<td>
-							<input type="text" name="sprice" value="${dto.sprice}"
-							required="required" class="form-control">
+							<input type="number" name="sprice" value="${dto.sprice}"
+							required="required" class="form-control" step="1000">
 						</td>
 					</tr>
 					<tr>
-						<th width="100">수량</th>
+						<th>수량</th>
 						<td>
 							<input type="number" name="scnt" value="${dto.scnt}"
 							required="required" class="form-control">
 						</td>
 					</tr>
 					<tr>
-						<th width="100">색상</th>
+						<th>색상</th>
 						<td>
 							<input type="color" name="scolor"
 							class="form-control" value="#aaccff">

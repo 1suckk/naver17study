@@ -15,4 +15,11 @@
 	<select id="getAllMember" resultType="MemberDto">
 		select * from member order by num desc
 	</select>
+	<delete id="deleteSelected">
+		delete from member
+		where num in 
+		<foreach collection="list" item="num" open="(" separator="," close=")">
+			#{num}	
+		</foreach>
+	</delete>
 </mapper>

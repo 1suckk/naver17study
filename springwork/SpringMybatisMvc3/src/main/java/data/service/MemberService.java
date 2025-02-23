@@ -27,4 +27,8 @@ public class MemberService {
 	{
 		return memberMapper.getAllMember();
 	}
+	
+	public void deleteSelected(List<Integer> selected) {
+        memberMapper.deleteSelected(selected);
+    }
 }

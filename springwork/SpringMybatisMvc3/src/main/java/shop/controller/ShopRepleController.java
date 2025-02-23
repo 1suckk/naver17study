@@ -26,19 +26,21 @@ public class ShopRepleController {
 	@Autowired
 	ShopRepleService repleService;
 	
-	//1.추가
+	//1.댓글 추가
 	@PostMapping("/shop/addreple")
 	public void insertReple(HttpServletRequest request,
 							@RequestParam int num,
 							@RequestParam String message,
 							@RequestParam("upload") MultipartFile upload)
 	{
+		System.out.println(upload.getOriginalFilename()+","+message);
 		//save의 실제 경로 구하기
 		String uploadFolder = request.getSession().getServletContext().getRealPath("/save");
 		//업로드할 파일명 (랜덤문자열.확장자)
 		String uploadFilename = UUID.randomUUID()+"."+upload.getOriginalFilename().split("\\.")[1];
 		//사진업로드
-		try {
+		try
+		{
 			upload.transferTo(new File(uploadFolder+"/"+uploadFilename));
 		}
 		catch (IllegalStateException | IOException e)
@@ -47,14 +49,16 @@ public class ShopRepleController {
 		}
 		//dto 생성
 		ShopRepleDto dto = new ShopRepleDto();
+		
 		dto.setNum(num);
 		dto.setMessage(message);
 		dto.setPhoto(uploadFilename);
+		
 		//db insert
 		repleService.insertShopReple(dto);
 	}
 	
-	//조회
+	//2.댓글 조회
 	@GetMapping("/shop/replelist")
 	public List<ShopRepleDto> repleList(@RequestParam int num)
 	{
@@ -63,7 +67,7 @@ public class ShopRepleController {
 		return list;
 	}
 	
-	//2.삭제
+	//2.댓글 삭제
 	@GetMapping("/shop/repledel")
 	public void repleDelete(@RequestParam int idx, HttpServletRequest request)
 	{

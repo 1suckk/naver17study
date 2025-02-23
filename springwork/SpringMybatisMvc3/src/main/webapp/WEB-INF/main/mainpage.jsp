@@ -15,12 +15,16 @@
 		body *{
 			font-family: 'Jua';
 		}
+		
+		div {
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
 	<jsp:include page="../../layout/title.jsp" />
 	<div style="margin: 30px 100px; width: 500px;">
-		<img src="./image/ai.jpg">
+		<img src="./image/ai.jpg" >
 		<h1 class="alert alert-danger">메인 페이지입니다</h1>
 	</div>
 </body>

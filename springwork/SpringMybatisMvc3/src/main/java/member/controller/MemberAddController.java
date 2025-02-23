@@ -1,10 +1,15 @@
 package member.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,9 +55,32 @@ public class MemberAddController {
 							@ModelAttribute MemberDto dto,
 							@RequestParam("upload") MultipartFile upload)
 	{
-		//사진 선택을 안했을경우 upload의 파일명을 확인
-		System.out.println("filenmae:"+upload.getOriginalFilename());
+		//업로드할 경로 구하기
+		String uploadFolder = request.getSession().getServletContext().getRealPath("/save");
 		
+		//dto에 저장할 변수명
+		String mphoto = "";
+		String uploadFilename = UUID.randomUUID()+"."+(upload.getOriginalFilename().split("\\.")[1]);
+		mphoto+=uploadFilename;
+		
+		try
+		{
+			upload.transferTo(new File(uploadFolder+"/"+uploadFilename));
+		}
+		catch (IllegalStateException | IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//dto에 저장
+		dto.setMphoto(mphoto);
+		// 회원 정보 저장
+	    memberService.insertMember(dto);
+		
+	    //insert 후 회원의 num값을 얻는 확인
+	    System.out.println("num="+dto.getNum());
+	    
 		//선택을 안했다면 upload 하지말고 mphoto 
 		return "redirect:/"; //일단은 홈으로 이동
 	}

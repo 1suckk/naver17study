@@ -11,4 +11,5 @@ public interface MemberMapper {
 	public int checkMyid(String Myid);
 	public void insertMember(MemberDto dto);
 	public List<MemberDto> getAllMember();
+	public void deleteSelected(List<Integer> selected);
 }
