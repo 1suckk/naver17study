@@ -170,7 +170,7 @@
 						s+=
 							`
 							<div class="list" style="margin-bottom:5px;">
-								<img src="../save/\${item.photo}" class="mini"
+								<img src="${naverurl}/shop/\${item.photo}" class="mini"
 								data-bs-toggle="modal" data-bs-target="#myMiniPhotoModal">
 								\${item.message}
 								<span class="day">\${item.writetime}</span>
@@ -209,7 +209,7 @@
 	      </div>
 	
 	      <!-- Modal footer -->
-	      <div class="modal-footer">
+	      <div class="modal-footer">			
 	        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
 	      </div>
 	
@@ -221,7 +221,7 @@
 		<tr>
 			<td>
 				<c:forTokens var="photo" items="${dto.sphoto}" delims=",">
-					<img src="../save/${photo}" class="small"><br>
+					<img src="${naverurl}/shop/${photo}" class="small"><br>
 					<script type="text/javascript">
 						$("img.small").click(function(){
 							$("img.large").attr("src", $(this).attr("src"));
@@ -230,7 +230,7 @@
 				</c:forTokens>
 			</td>
 			<td align="center">
-				<img src="../save/${dto.mainPhoto}" class="large"
+				<img src="${naverurl}/shop/${dto.mainPhoto}" class="large"
 				onerror="this.src='../save/noimage.png'">
 			</td>
 		</tr>

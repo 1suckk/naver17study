@@ -52,7 +52,7 @@
 				<a href="./detail?num=${dto.num}" style="color:black;">
 					<figure>
 						<a href="./detail?num=${dto.num}">
-							<img src="../save/${dto.mainPhoto}"
+							<img src="${fronturl}/shop/${dto.mainPhoto}${backurl}"
 							onerror="this.src='../save/noimage.png'">
 						</a>
 						<figcaption>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.BoardRepleMapper">
+	<select id="getTotalCount" resultType="int" parameterType="int">
+		select count(*) from boardreple where idx=#{idx}
+	</select>
+	<select id="getRepleByIdx" parameterType="int" resultType="BoardRepleDto">
+		select * from boardreple where idx=#{idx}
+	</select>
+	<insert id="insertBoardReple" parameterType="BoardRepleDto">
+		insert into boardreple (idx, myid, photo, message, writeday)
+		values (#{idx}, #{myid}, #{photo}, #{message}, #{writeday})
+	</insert>
+	<delete id="deleteBoardReple" parameterType="int">
+		delete from boardreple where num=#{num}
+	</delete>
+	<select id="getPhoto" parameterType="int" resultType="String">
+		select photo from boardreple where num=#{num}
+	</select>
+</mapper>

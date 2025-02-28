@@ -15,19 +15,24 @@
 		body *{
 			font-family: 'Jua';
 		}
+		
+		.memberbox img {
+			width: 100px;
+			height: 100px;
+		}
 	</style>
 </head>
 <body>
 	<jsp:include page="../../layout/title.jsp" />
-	<div style="margin: 20px; width: 700px;">
+	<div style="margin: 20px; width: 800px;" class="memberbox">
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th>
+					<th style="width: 200px;">
 						<input type="checkbox" name="checkAll" id="chkAllSelect">&nbsp;회원명
 					</th>
-					<th>아이디</th>
-					<th>핸드폰</th>
+					<th style="width: 100px;">아이디</th>
+					<th style="widows: 150px;">핸드폰</th>
 					<th>주소</th>
 					<th>가입일</th>
 					<th>삭제</th>
@@ -38,7 +43,8 @@
 					<tr>
 						<td>
 							<label>
-								<img src="${dto.mphoto}">
+								<img src="${fronturl}/member/${dto.mphoto}${backurl}"
+								onerror="this.src='../save/noimage.png'">
 								<input type="checkbox" name="memberchk" class="chkselect" value="${dto.num}">&nbsp;${dto.mname}
 							</label>
 						</td>
@@ -55,14 +61,14 @@
 							<fmt:formatDate value="${dto.gaipday}" pattern="yyyy-MM-dd"/>
 						</td>
 						<td>
-							<a href="./member/delete?num=${dto.num}">
+							<button type="button" class="btn btn-danger btn-sm btndelete" data-num="${dto.num}">
 								삭제
-							</a>
+							</button>
 						</td>
 					</tr>
 				</c:forEach>
 				<tr>
-					<td colspan="5">
+					<td colspan="6">
 						<button type="button" id="btnSelectedDel"
 						style="float: left">
 							선택한 회원 삭제
@@ -92,16 +98,38 @@
 				alert("삭제할 회원을 선택하세요.");
 				return;
 			}
-			
-			//선택한 회원 삭제 요청
-			$.ajax({
-				type:"post",
-				url:"/member/deleteSelected",
-				data:{selected:selected},
-				success: function() {
-					location.reload(); //회원 삭제 후 페이지 새로고침
-				}	
-			});
+			//관리자에게 삭제 전 경고
+			if (confirm("정말로 삭제하시겠습니까? 삭제 후 번복은 불가합니다."))
+			{
+				//선택한 회원 삭제 요청
+				$.ajax({
+					type:"post",
+					url:"/member/deleteSelected",
+					data:{selected:selected},
+					success: function() {
+						location.reload(); //회원 삭제 후 페이지 새로고침
+					}	
+				});
+			}
+		});
+		
+		//개별 회원 삭제 기능
+		$(".btndelete").click(function(){
+			//data() 함수로 받아오기
+			let num = $(this).data("num");
+			//관리자에게 삭제 전 경고
+			if (confirm("정말로 삭제하시겠습니까?"))
+			{
+	            $.ajax({
+	                type: "post",
+	                url: "/member/delete", // 개별 회원 삭제를 처리할 URL
+	                data: { num: num }, // 삭제할 회원의 num 값 전송
+	                success: function()
+	                {
+	                    location.reload(); // 삭제 후 페이지 새로고침
+	                }
+	            });
+        	}
 		});
 	</script>
 </body>

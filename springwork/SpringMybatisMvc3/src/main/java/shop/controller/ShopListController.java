@@ -12,14 +12,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import data.dto.ShopDto;
 import data.service.ShopRepleService;
 import data.service.ShopService;
+import naver.storage.NcpObjectStorageService;
 
 @Controller
 public class ShopListController {
 	@Autowired
 	ShopService shopService;
-	
 	@Autowired
 	ShopRepleService repleService;
+	@Autowired
+	NcpObjectStorageService storageService;
+	
+	//버켓 이름
+	private String bucketName = "bitcamp-bucket-140";
 	
 	@GetMapping("/shop/list")
 	public String shopList(Model model)
@@ -41,6 +46,8 @@ public class ShopListController {
 		//모델에 저장
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("list", list);
+		model.addAttribute("fronturl", "https://jhmafcod8738.edge.naverncp.com/mBHgqdbMYT");
+		model.addAttribute("backurl", "?type=f&w=30&h=30&faceopt=true&ttype=jpg");
 		//포워드
 		return "shop/shoplist";
 	}

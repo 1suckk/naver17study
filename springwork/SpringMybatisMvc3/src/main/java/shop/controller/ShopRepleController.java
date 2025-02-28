@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import data.dto.ShopRepleDto;
 import data.service.ShopRepleService;
 import jakarta.servlet.http.HttpServletRequest;
+import naver.storage.NcpObjectStorageService;
 
 @RestController
 //포워드 없다
@@ -25,6 +26,11 @@ public class ShopRepleController {
 	//서비스 연결
 	@Autowired
 	ShopRepleService repleService;
+	@Autowired
+	NcpObjectStorageService storageService;
+	
+	//NCP 버킷 이름
+	private String bucketName="bitcamp-bucket-140";
 	
 	//1.댓글 추가
 	@PostMapping("/shop/addreple")
@@ -34,19 +40,10 @@ public class ShopRepleController {
 							@RequestParam("upload") MultipartFile upload)
 	{
 		System.out.println(upload.getOriginalFilename()+","+message);
-		//save의 실제 경로 구하기
-		String uploadFolder = request.getSession().getServletContext().getRealPath("/save");
-		//업로드할 파일명 (랜덤문자열.확장자)
-		String uploadFilename = UUID.randomUUID()+"."+upload.getOriginalFilename().split("\\.")[1];
-		//사진업로드
-		try
-		{
-			upload.transferTo(new File(uploadFolder+"/"+uploadFilename));
-		}
-		catch (IllegalStateException | IOException e)
-		{
-			e.printStackTrace();
-		}
+		
+		//네이버 스토리지에 사진 업로드
+		String uploadFilename = storageService.uploadFile(bucketName, "shop", upload);
+		
 		//dto 생성
 		ShopRepleDto dto = new ShopRepleDto();
 		

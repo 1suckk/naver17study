@@ -22,4 +22,18 @@
 			#{num}	
 		</foreach>
 	</delete>
+	<delete id="deleteMember">
+		delete from member 
+		where num=#{num}
+	</delete>
+	<select id="getMemberById" parameterType="String" resultType="MemberDto">
+        select * from member
+        where myid=#{myid}
+    </select>
+    <update id="changePhoto" parameterType="Map">
+    	update member set mphoto=#{mphoto} where myid=#{myid}
+    </update>
+    <update id="updateMember" parameterType="MemberDto">
+    	update member set mname=#{mname}, mhp=#{mhp}, maddr=#{maddr} where num=#{num}
+    </update>
 </mapper>

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import data.dto.MemberDto;
 import data.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
+import naver.storage.NcpObjectStorageService;
 
 @Controller
 @RequestMapping("/member")
@@ -28,6 +29,12 @@ public class MemberAddController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	//NCP 버킷 이름
+	private String bucketName="bitcamp-bucket-140";
+	
+	@Autowired
+	NcpObjectStorageService storageService;
 	
 	@GetMapping("/form")
 	public String form()
@@ -51,35 +58,22 @@ public class MemberAddController {
 	}
 	
 	@PostMapping("/insert")
-	public String insert(HttpServletRequest request,
-							@ModelAttribute MemberDto dto,
+	public String insert(@ModelAttribute MemberDto dto,
 							@RequestParam("upload") MultipartFile upload)
 	{
-		//업로드할 경로 구하기
-		String uploadFolder = request.getSession().getServletContext().getRealPath("/save");
-		
-		//dto에 저장할 변수명
-		String mphoto = "";
-		String uploadFilename = UUID.randomUUID()+"."+(upload.getOriginalFilename().split("\\.")[1]);
-		mphoto+=uploadFilename;
-		
-		try
+		if(upload.getOriginalFilename().equals(""))
 		{
-			upload.transferTo(new File(uploadFolder+"/"+uploadFilename));
+			dto.setMphoto("no");
 		}
-		catch (IllegalStateException | IOException e)
+		else
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// 네이버 스토리지에 회원 등록 사진 저장하기
+			String uploadFileName = storageService.uploadFile(bucketName, "member", upload); //두번째 파라미터는 디렉토리 이름
+			dto.setMphoto(uploadFileName);
 		}
 		
-		//dto에 저장
-		dto.setMphoto(mphoto);
 		// 회원 정보 저장
 	    memberService.insertMember(dto);
-		
-	    //insert 후 회원의 num값을 얻는 확인
-	    System.out.println("num="+dto.getNum());
 	    
 		//선택을 안했다면 upload 하지말고 mphoto 
 		return "redirect:/"; //일단은 홈으로 이동
