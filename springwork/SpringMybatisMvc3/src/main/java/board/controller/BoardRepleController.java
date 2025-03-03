@@ -17,6 +17,7 @@ import data.service.BoardRepleService;
 import data.service.BoardService;
 import data.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import naver.storage.NcpObjectStorageService;
 
@@ -41,23 +42,41 @@ public class BoardRepleController {
 		
 		//네이버 스토리지에 사진 업로드
 		uploadFilename = storageService.uploadFile(bucketName, "board", upload);
-		
 		return uploadFilename;
 	}
 	
 	//1. 댓글 삽입
 	@PostMapping("/board/addreple")
-	public void insertReple()
+	public void insertReple(@RequestParam int idx, @RequestParam String message,
+							HttpSession session)
 	{
+		String loginid = (String)session.getAttribute("loginid");
 		
+		BoardRepleDto dto = BoardRepleDto.builder()
+							.idx(idx)
+							.message(message)
+							.myid(loginid)
+							.photo(loginid)
+							.build();
+		
+		boardRepleService.insertBoardReple(dto);
+		uploadFilename=null;
 	}
 	
 	//2. 댓글 조회
 	@GetMapping("/board/replelist")
 	public List<BoardRepleDto> replelist(@RequestParam int idx)
 	{
-		List<BoardRepleDto> list = null;
-		list = boardRepleService.getRepleByIdx(idx);
+		List<BoardRepleDto> list = boardRepleService.getRepleByIdx(idx);
+		
+		//반복문 돌리기
+		for(int i=0; i<list.size(); i++)
+		{
+			String writer = memberService.getMemberbyId(list.get(i).getMyid()).getMname();
+			String profilePhoto = memberService.getMemberbyId(list.get(i).getMyid()).getMphoto();
+			list.get(i).setWriter(writer);
+			list.get(i).setProfile(profilePhoto);
+		}
 		return list;
 	}
 	
@@ -66,5 +85,6 @@ public class BoardRepleController {
 	public void repleDelete(@RequestParam String fname)
 	{
 		storageService.deleteFile(bucketName, "board", fname);
+		uploadFilename=null;
 	}
 }

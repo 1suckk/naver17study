@@ -43,6 +43,11 @@
 		.uploadphoto {
 			font-size: 1.5em;
 		}
+		
+		.profile {
+			width: 40px;
+			height: 40px;
+		}
 	</style>
 	<script type="text/javascript">
 		$(function(){
@@ -65,11 +70,11 @@
      						<div style="margin-left:20px;">
      							<pre style="font-size:15px;">\${item.message}</pre>
      							<br>`; 
-     				if(item.photo!=null)	
-         						s+=`<img src="${naverurl}/board/\${item.photo}" class="photo"><br><br>`;	
-     				
-         			s+=`</div>`;
-     					
+     					if(item.photo!=null)
+						{	
+         					s+=`<img src="${naverurl}/board/\${item.photo}" class="photo"><br><br>`;	
+     					}
+         				s+=`</div>`;
      				});
      				$(".replelist").html(s);
      			}
@@ -174,17 +179,11 @@
 				</tbody>
 			</table>
 			<div style="margin: 30px;">
-				<i class="bi bi-chat-dots-fill"></i>
-				<span>댓글: ${totalCount}개</span><br><br>
-				<span>${writer}</span>
-				<div class="alert alert-danger" style="width: 700px;">
-					댓글목록
-				</div>
-				<textarea id="message" rows="5" cols="82" placeholder="댓글을 남겨보세요"></textarea>
+				<div class="replelist" style="width: 700px;"></div>
+				<b>${writer}</b><br>
+				<textarea id="message" class="form-control" rows="5" cols="82" placeholder="댓글을 남겨보세요"></textarea>
 				<!-- 아래의 카메라 아이콘을 클릭할 때, 선택한 사진이 하나씩 나타나는 부분 -->
-				<div class="alert alert-danger replephoto" style="width: 700px;">
-					첨부사진
-				</div>
+				<div class="replephoto" style="width: 700px;"></div>
 				<i class="bi bi-camera-fill uploadphoto"></i>
 				<input type="file" id="addphoto">
 				<button type="button" class="btn btn-success btnreplesave" style="float: right">등록</button>
@@ -244,17 +243,20 @@
 				$.ajax({
 					type:"post",
 					dataType:"text",
-					data:{"idx":idx},
+					data:{"idx":idx, "message":m},
 					url:"/board/addreple",
 					success:function(){
 						//댓글 추가 이후 다시 댓글 입력창 초기화
-						$("#message").val();
+						$("#message").val("");
 						$(".replehoto").html("");
 						alert("댓글이 저장되었습니다!");
 						
 						//다시 등록된 댓글 리스트 출력
 						replelist();
-					}
+					},
+				    error: function(xhr, status, error) {
+				        alert("댓글 저장 중 오류가 발생했습니다: " + error);
+				    }
 				});
 			});
 		</script>

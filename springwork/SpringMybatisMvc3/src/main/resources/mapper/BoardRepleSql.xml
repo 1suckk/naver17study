@@ -8,8 +8,8 @@
 		select * from boardreple where idx=#{idx}
 	</select>
 	<insert id="insertBoardReple" parameterType="BoardRepleDto">
-		insert into boardreple (idx, myid, photo, message, writeday)
-		values (#{idx}, #{myid}, #{photo}, #{message}, #{writeday})
+		insert into boardreple (idx, myid, message, photo, writeday)
+		values (#{idx}, #{myid}, #{message}, #{photo}, now())
 	</insert>
 	<delete id="deleteBoardReple" parameterType="int">
 		delete from boardreple where num=#{num}

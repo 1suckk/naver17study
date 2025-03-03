@@ -4,7 +4,10 @@ import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /*
 create table boardreple
@@ -21,10 +24,15 @@ create table boardreple
 */
 @Data
 @Alias("BoardRepleDto")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class BoardRepleDto {
 	private int num;
 	private int idx;
 	private String myid;
+	private String writer;
+	private String profile;
 	private String message;
 	private String photo;
 	private Timestamp writeday;
