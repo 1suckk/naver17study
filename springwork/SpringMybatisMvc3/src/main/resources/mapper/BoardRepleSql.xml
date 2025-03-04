@@ -17,4 +17,7 @@
 	<select id="getPhoto" parameterType="int" resultType="String">
 		select photo from boardreple where num=#{num}
 	</select>
+	<select id="getRepleByNum" parameterType="int" resultType="BoardRepleDto">
+		select * from boardreple where num=#{num}
+	</select>
 </mapper>

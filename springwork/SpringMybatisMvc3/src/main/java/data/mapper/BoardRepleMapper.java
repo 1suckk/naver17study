@@ -13,4 +13,5 @@ public interface BoardRepleMapper {
 	public void insertBoardReple(BoardRepleDto dto);
 	public void deleteBoardReple(int num);
 	public String getPhoto(int num);
+	public BoardRepleDto getRepleByNum(int num);
 }

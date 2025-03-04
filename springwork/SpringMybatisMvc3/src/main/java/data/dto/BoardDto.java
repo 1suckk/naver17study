@@ -37,4 +37,5 @@ public class BoardDto {
 	private Timestamp writeday;
 	private List<String> photos; //다른 db에서 join 받을 것
 	private int photoCount;
+	private int repleCount;
 }

@@ -11,6 +11,8 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	
 	<style>
 		body *{
 			font-family: 'Jua';
@@ -66,10 +68,12 @@
      				$.each(res,function(i,item){    					
      					s+=`
      						<img src="${naverurl}/member/\${item.profile}" class="profile">
-     						<span>\${item.writer}</span><span class="day">\${item.writeday}</span>
+     						<span>\${item.writer}</span>
+     						<fmt:formatDate value="${item.writeday}" pattern="yyyy-MM-dd"/>
      						<div style="margin-left:20px;">
      							<pre style="font-size:15px;">\${item.message}</pre>
-     							<br>`; 
+     							<br>
+     						`; 
      					if(item.photo!=null)
 						{	
          					s+=`<img src="${naverurl}/board/\${item.photo}" class="photo"><br><br>`;	
@@ -80,9 +84,38 @@
      			}
      		});
 		}
+		
+		//댓글의 작은 사진을 클릭 ==> 원본 사진 모달로 나오게 하기
+		$(document).on("click","img.photo",function(){
+			//현재 사진 src 얻기
+			let imgSrc=$(this).attr("src");
+			//모달에 넣기
+			$(".modalphoto").attr("src",imgSrc);
+		});
 	</script>
 </head>
 <body>
+	<!-- The Modal -->
+	<div class="modal" id="myRepleModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">회원 사진</h4>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+	      </div>
+	      <!-- Modal body -->
+	      <div class="modal-body">
+	      	<img src="" class="modalphoto" style="max-width: 100%;">	
+	      </div>
+	      <!-- Modal footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- The Modal End -->
 	<!-- 세션을 못받았다면, 즉 로그인을 안했다면 로그인 유도 -->
 	<c:if test="${sessionScope.loginstatus==null}">
 		<script type="text/javascript">
@@ -225,7 +258,7 @@
 				let fname = close.attr("fname");
 				$.ajax({
 					type:"get",
-					dataTypr:"text",
+					dataType:"text",
 					data:{"fname":fname},
 					url:"/board/repledel",
 					success:function(){

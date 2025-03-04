@@ -83,6 +83,9 @@
 								${dto.readcount}
 							</td>
 						</tr>
+						<c:if test="${dto.repleCount>0}">
+							<span style="color: red;">[${dto.repleCount}]</span>
+						</c:if>
 					</c:forEach>
 				</c:if>
 			</tbody>

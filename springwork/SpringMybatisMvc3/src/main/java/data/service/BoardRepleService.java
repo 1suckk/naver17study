@@ -38,4 +38,9 @@ public class BoardRepleService {
 	{
 		return boardRepleMapper.getPhoto(num);
 	}
+	
+	public BoardRepleDto getRepleByNum(int num)
+	{
+		return boardRepleMapper.getRepleByNum(num);
+	}
 }

@@ -59,7 +59,7 @@
 	        		$.ajax({
 	        			type:"post",
 	        			dataType:"text",
-	        			data:{"manme":$("#mname").val(), "mhp":$("#mhp").val(),
+	        			data:{"mname":$("#mname").val(), "mhp":$("#mhp").val(),
 	        					"maddr":$("#maddr").val(),"num":${dto.num}},
 	        			url:"/member/update",
 	        			success:function(){
