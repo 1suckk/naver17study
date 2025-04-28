@@ -36,9 +36,12 @@ public class ShopDao {
 		shopRepository.deleteById(num);
 	}
 	
-	//수정
+	//수정 (사진 포함/미포함)
 	public void updateShop(ShopEntity shopEntity)
 	{
-		shopRepository.save(shopEntity); //num이 포함되어 있으므로 수정
+		if(shopEntity.getPhoto()==null)
+			shopRepository.updateShopNoPhoto(shopEntity); //photo 수정은 제외
+		else
+			shopRepository.save(shopEntity); //num이 포함되어 있으므로 수정
 	}
 }

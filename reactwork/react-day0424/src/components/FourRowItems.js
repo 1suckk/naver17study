@@ -1,5 +1,5 @@
 import React from 'react';
-import noimage from './image/noimage.jpg';
+import noimage from '../image/noimage.jpg';
 import {DeleteForeverSharp} from '@mui/icons-material';
 
 const FourRowItems = ({row,onDelete}) => {
@@ -9,6 +9,7 @@ const FourRowItems = ({row,onDelete}) => {
     const shopDeleteEvent=(num)=>{
         let alert =window.confirm("정말 삭제하시겠습니까?");
         if(!alert) return;
+        
         onDelete(num);
     }
 

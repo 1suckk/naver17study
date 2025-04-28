@@ -27,6 +27,10 @@ spring:
     database: mysql
 #Mysql 상세지정   
     database-platform: org.hibernate.dialect.MySQLDialect
+#security
+jwt:
+  expiration_time: 86400000 #1일
+  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
 
 #swagger doc
 springdoc:

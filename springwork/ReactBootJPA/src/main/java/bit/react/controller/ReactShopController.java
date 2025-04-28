@@ -2,6 +2,7 @@ package bit.react.controller;
 
 import java.util.List;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import bit.react.data.ShopDto;
 import bit.react.data.ShopEntity;
 import bit.react.repository.ShopDao;
-import io.swagger.v3.oas.models.media.MediaType;
 import lombok.RequiredArgsConstructor;
 import naver.storage.NcpObjectStorageService;
 
@@ -54,7 +54,7 @@ public class ReactShopController {
 	}
 	
 	//사진은 별도로 업로드
-	@PostMapping(value="/upload")
+	@PostMapping(value="/upload", consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public String uploadPhoto(@RequestParam("upload") MultipartFile upload)
 	{
 		System.out.println("업로드한 파일명: "+upload.getOriginalFilename());
@@ -66,7 +66,7 @@ public class ReactShopController {
 	}
 	
 	//일부 데이터 조회
-	@GetMapping("/select")
+	@GetMapping("/detail")
 	public ShopEntity getSelectData(@RequestParam("num") int num)
 	{
 		return shopDao.getData(num);
@@ -90,5 +90,22 @@ public class ReactShopController {
 		//2.db 삭제
 		shopDao.deleteShop(num);
 		return "delete ok!";
+	}
+	
+	@PostMapping("/shopupdate")
+	public String updateShop(@RequestParam("dto") ShopDto dto)
+	{
+		ShopEntity entity = ShopEntity.builder()
+				.sangpum(dto.getSangpum())
+				.color(dto.getColor())
+				.Price(dto.getPrice())
+				.sangguip(dto.getSangguip())
+				.num(dto.getNum())
+				.photo(dto.getPhoto())
+				.build();
+		
+		shopDao.updateShop(entity);
+		uploadFilename=null;
+		return "update ok";
 	}
 }
