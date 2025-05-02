@@ -16,12 +16,15 @@ import org.springframework.web.multipart.MultipartFile;
 import bit.react.data.ShopDto;
 import bit.react.data.ShopEntity;
 import bit.react.repository.ShopDao;
+
 import lombok.RequiredArgsConstructor;
+
 import naver.storage.NcpObjectStorageService;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
+
 @RequestMapping("/react")
 public class ReactShopController {
 	
@@ -85,7 +88,7 @@ public class ReactShopController {
 	{
 		//1. 스토리지에서 사진 지우기
 		String photoName = shopDao.getData(num).getPhoto();
-		storageService.deleteFile(photoName, photoName, photoName);
+		storageService.deleteFile(bucketName, folderName, uploadFilename);
 		
 		//2.db 삭제
 		shopDao.deleteShop(num);

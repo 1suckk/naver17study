@@ -15,8 +15,11 @@ public class CustomUserDetailsService {
 		//db에서 조회
 		UserEntity userData = userRepository.findByUsername(username);
 		//db에 존재할 경우 user 정보 보관
-		
-		
+		if(userData!=null)
+		{
+			return new CustomUserDeails(userData);
+		}
+		System.out.println("user 정보 반환에 실패");
 		return null;
 	}
 }

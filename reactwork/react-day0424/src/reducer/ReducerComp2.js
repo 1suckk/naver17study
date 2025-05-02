@@ -1,4 +1,5 @@
 import React, {useState, useReducer} from 'react';
+import Student from './Student'; // Import the Student component
 
 //reducer 설정 시 초기값으로 미리 지정
 const initialState = {
@@ -16,21 +17,20 @@ const reducer = (state, action) => {
                 id: new Date(),
                 name,
                 isHere: false
-            }
+            };
 
-            const data={
+            return {
                 count:state.count+1,
                 students:[
-                    ...state.student,
+                    ...state.students, //기존 학생정보
                     addStudent
                 ]
             }
-            return data;
 
         case 'deleteStudent':
             return {
                 count: state.count - 1, //인원수는 1만큼 줄이기
-                students: state.student.filter(
+                students: state.students.filter(
                     //payload 를 통해서 삭제할 학생의 id를 받아서 해당 학생을 제외한 나머지 학생들만 남기기
                     s => s.id !== action.payload.id
                 )
@@ -67,11 +67,13 @@ const ReducerComp2 = () => {
                 onClick={() => {
                     dispatch({ 'type': 'addStudent', payload: {name}});
                     setName(''); //입력창 초기화
-                }}>추가</button>
-                <br/><br/>
+                }}>추가
+                </button>
+                <br/>
+                <br/>
                 {
                     studentInfo.students.map((student, idx) => 
-                        <student key={idx} student={student}
+                        <Student key={idx} student={student}
                         dispatch={dispatch}/>
                     )
                 }

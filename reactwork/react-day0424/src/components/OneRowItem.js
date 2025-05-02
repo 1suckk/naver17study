@@ -7,7 +7,8 @@ const OneRowItem = (props) => {
         <tr>
             <td>{idx+1}</td>
             <td>
-                <img alt="" src={`../shop/${row.photo}`}
+                {/* 상대경로로 받을거면 require(``) 사용해야 한다 */}
+                <img alt="" src={require(`../shop/${row.photo}`)}
                 style={{width:'30px', height:'30px', marginRight:'5px'}}/>
                 {row.irum}
             </td>
@@ -19,7 +20,6 @@ const OneRowItem = (props) => {
                 onClick={()=>{
                     let alert = window.confirm('삭제할까요?');
                     if(!alert) return;
-
                     onDelete(idx);
                 }}/>
             </td>

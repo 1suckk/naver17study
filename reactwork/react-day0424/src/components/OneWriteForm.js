@@ -35,7 +35,7 @@ const OneWriteForm = ({onSave}) => {
                 <option>과장</option>
                 <option>대리</option>
                 <option>주임</option>
-                <option>사원</option>
+                <option selected>사원</option>
                 <option>계약직</option>
             </select>
             <input type='text' placeholder='성명'

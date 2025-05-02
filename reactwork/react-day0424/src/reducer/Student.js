@@ -2,6 +2,7 @@ import React from 'react';
 
 const Student = (props) => {
     const { student, dispatch } = props; //props로 전달된 student와 dispatch를 구조분해 할당
+    
     return (
         <div className='input-group' style={{ width: '300px', margin: '5px 20px' }}>
             <div style={{textDecoration: student.isHere ? 'line-through' : 'none',

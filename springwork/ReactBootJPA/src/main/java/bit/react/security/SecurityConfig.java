@@ -23,8 +23,9 @@ public class SecurityConfig {
 	private final JwtUtil jwtUtil;
 	
 	private static final String[] AUTH_WHITELIST = {
-			"/api/v1/member/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
-			"/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html", "/api/v1/auth/**"
+			"/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
+			"/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html",
+			"/api/jpashop/swagger/**"
 	};
 	
 	//비밀번호 암호화에 필요한 메서드
@@ -54,17 +55,17 @@ public class SecurityConfig {
 		//경로변 인가작업
 		http
 		.authorizeHttpRequests(auth->auth
-				.requestMatchers("/", "/login","/join").permitAll()
+				.requestMatchers("/").permitAll()
 				.requestMatchers(AUTH_WHITELIST).permitAll()
-				.requestMatchers("/admin").hasRole("ADMIN")
+				.requestMatchers("/react/**").permitAll() //추가해줘야 접근이 가능!
+				.requestMatchers("/member/**", "/board/**").permitAll() //마이페이지 접근
+				.requestMatchers("/auth/board/**").hasAnyRole("ADMIN", "MEMBER")
+				.requestMatchers("/admin", "/auth/member/**").hasRole("ADMIN")
 				.anyRequest().authenticated()//로그인한 사용자만 접근이 가능
 		);
 		
 		//세션 설정 - 사용 안함
-		http.
-		sessionManagement(
-				session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				);
+		http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		
 		return http.build();
 	}

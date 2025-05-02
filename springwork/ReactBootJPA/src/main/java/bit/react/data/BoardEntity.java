@@ -2,9 +2,11 @@ package bit.react.data;
 
 import java.sql.Timestamp;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,29 +20,34 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="jpajoin")
-@Data
+@Table(name = "jpaboard")
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class BoardEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int num;
 	
-	@Column(length = 30)
+	@Column(length = 30, updatable = false)
 	private String username;
 	
-	@Column(length = 100)
-	private String password;
+	private String subject;
 	
-	private String address;
+	@Column(length = 2000)
+	private String content;
 	
-	@Column(length = 20)
-	private String role;
+	private String photo;
 	
-	@CreationTimestamp
 	@Column(updatable = false)
+	@ColumnDefault("0")
+	private int readcount;
+	
+	@Column(updatable = false)
+	@CreationTimestamp
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
-	private Timestamp gaipday;
+	private Timestamp writeday;
 }

@@ -40,12 +40,7 @@ const UpdateForm = () => {
         //수정
         axios.post("/react/shopupdate", shopData)
         .then(res=>{
-            if(res.data.result === 'success'){
-                //수정 후 detail로 이동
                 navi(`/five/detail?num=${num}`);
-            }else{
-            
-            }
         });
     }
 
@@ -56,8 +51,17 @@ const UpdateForm = () => {
             </Alert>
             <form onSubmit={onSubmit}>
             <table className='table table-bordered'>
+                <tbody>
+                    <tr>
+                        <td align='center'>
+                            상품명
+                            <input type='text' name='sangpum' value={shopData.sangpum}
+                            onChange={shopDataChange}/>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
-            </form>
+            </form> 
         </div>
     );
 };
