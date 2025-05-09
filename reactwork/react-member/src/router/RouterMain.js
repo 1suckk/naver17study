@@ -25,7 +25,7 @@ const RouterMain = () => {
                     {/* board 라우팅 부분 */}
                     <Route path='/board/list' element={<BoardList/>}/>
                     <Route path='/board/form' element={<BoardForm/>}/>
-                    <Route path='/board/detail' element={<BoardDetail/>}/>
+                    <Route path='/board/detail/:num' element={<BoardDetail/>}/>
                     {/* 그 이외의 다름 매핑주소에서 호출 */}
                     <Route path='*' element={<Home/>}/>
                 </Routes>

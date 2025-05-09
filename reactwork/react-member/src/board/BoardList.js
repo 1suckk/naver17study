@@ -15,9 +15,11 @@ const BoardList = () => {
     }
 
     //시작되자마자 리스트 불러오기 위해
+    //끝에 ,[] 안붙이면 getAllDatas가 setBoardList를 호출 → 
+    // 상태 변경 → 리렌더링 → useEffect 재실행 → 무한 반복!
     useEffect(()=>{
         getAllDatas();
-    })
+    },[]);
 
     return (
         <div>

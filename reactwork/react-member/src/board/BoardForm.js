@@ -1,22 +1,37 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BoardForm = () => {
     const [subject, setSubject] = useState('');
     const [content, setContent] = useState('');
-    const [photo, setPhoto] = useState('');
+    const [photo, setPhoto] = useState(null);
     const [username, setUsername] = useState('');
+
+    const navi = useNavigate();
 
     const onSaveSubmit=(e)=>{
         //새로고침 방지
         e.preventDefault();
 
+        const formData = new FormData(); //선언 후 각 요소를 추가해줘야
+
+        formData.append('subject', subject);
+        formData.append('content', content);
+        formData.append('upload', photo);
+
         //db 저장 후 리스트 페이지로 이동
-        axios.post('auth/board/insert', {subject, content, photo, username})
+        axios.post('/auth/board/insert', formData, {
+            headers:
+            {
+                'Content-Type':'multipart/form-data',
+                'Authorization':'Bearer '+sessionStorage.getItem('token')
+            }
+        })
         .then(res=>{
-            console.log('서버 응답:', res.data);
+            navi('/board/list');
         });
-    }
+    };
 
     return (
         <div>
@@ -40,6 +55,12 @@ const BoardForm = () => {
                     onChange={(e)=>{
                         setContent(e.target.value)
                     }}/>
+                </div>
+                <div className='mb-3'>
+                    <input type='file' name='upload' className='form-control'
+                    required 
+                    onChange={e=>setPhoto(e.target.files[0])}
+                    />
                 </div>
                 <button type='submit' className='btn btn-success'>
                     글쓰기
